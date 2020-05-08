@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Console\Command\MakeAdmin;
 use Illuminate\Console\Scheduling\Schedule;
 use Laravel\Lumen\Console\Kernel as ConsoleKernel;
 
@@ -13,7 +14,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        MakeAdmin::class
     ];
 
     /**

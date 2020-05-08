@@ -12,7 +12,24 @@
 | and give it the Closure to call when that URI is requested.
 |
 */
+$router->group([
+    'prefix' => 'api/v1',
+    'as'  =>  'api'
+], function () use ($router) {
 
-$router->get('/', function () use ($router) {
-    return $router->app->version();
+    // reports endpoint
+    $router->group([
+        'prefix' => 'reports',
+        'as' => 'reports'
+    ], function () use ($router) {
+        $router->post('', ['as' => 'create', 'uses' => 'ReportController@store']);
+
+        $router->get('{id}', ['as' => 'read', 'uses' => 'ReportController@read']);
+
+        $router->patch('{id}', ['as' => 'update', 'uses' => 'ReportController@update']);
+
+        $router->delete('{id}', ['as' => 'delete', 'uses' => 'ReportController@delete']);
+
+        $router->get('', ['as' => 'list', 'uses' => 'ReportController@list']);
+    });
 });
