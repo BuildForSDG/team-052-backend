@@ -3,6 +3,81 @@ A one-liner phrase describing this project or app
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/a002ef4aa50a4d029334e8fac94686c7)](https://app.codacy.com/gh/BuildForSDG/Team-153-Product?utm_source=github.com&utm_medium=referral&utm_content=BuildForSDG/Team-153-Product&utm_campaign=Badge_Grade_Settings)
 [![Codacy Badge](https://img.shields.io/badge/Code%20Quality-D-red)](https://img.shields.io/badge/Code%20Quality-D-red)
 
+## Api Documentation
+To use this api on your local machine,
+1. Rename the `.env.example` to `.env`.
+2. In this file, replace the `DB_DATABASE`, `DB_USERNAME` and `DB_PASSWORD` values with your database name on your local machine, the database username and password. 
+3. On your command prompt run `php artisan migrate --seed` to migrate the database tables and seed the reports table with demo data. (ensure you php local server is running).
+4. To create a default admin user run `php artisan make:admin`.
+5. To see the reports made by users visit the endpoint `/api/v1/reports`.
+
+## Endpoints
+### Base Uri
+The api's base uri is `/api/v1/`
+### List
+To get a list of all items of a resource (e.g reports), make a GET request to the endpoint `/api/v1/reports/`.  
+**Response**  
+You should receive a json response with status `200`, a `data` key containing an array of reports and `meta` key containing pagination details.  
+**Sample Response**  
+```json
+{
+  "meta": {
+    "current_page": 1,
+    "first_page_url": "http://localhost:7070/api/v1/reports?page=1",
+    "from": 1,
+    "next_page_url": null,
+    "path": "http://localhost:7070/api/v1/reports",
+    "per_page": 15,
+    "prev_page_url": null,
+    "to": 10
+  },
+  "data": [
+    {
+      "id": 10,
+      "title": "Yessenia Manor Accident",
+      "note": "The Caterpillar and Alice was more hopeless than ever: she sat down and cried. 'Come, there's half.",
+      "status": "pending",
+      "location": "19688 Roselyn Radial",
+      "visual_image": "https://lorempixel.com/300/300/city/?38172",
+      "time_of_report": "2020-05-08T21:22:14.000000Z",
+      "status_updated_at": "2020-05-08T21:22:14.000000Z"
+    }
+   ]
+ }
+```
+### Create
+To create a resource, make a POST request to the the endpoint `api/v1/reports`.  
+**Response**  
+`@TODO`  
+**Sample Response**  
+`@TODO`
+
+### Read
+To read a single resource, make a GET request to the the endpoint `api/v1/reports/{id}`.  
+**Response**  
+`@TODO`  
+**Sample Response**  
+`@TODO`
+
+### Update
+To update a resource, make a PATCH request to the the endpoint `api/v1/reports/{id}`.  
+**Response**  
+`@TODO`  
+**Sample Response**  
+`@TODO`
+
+### Delete
+To delete a resource, make a DELETE request to the the endpoint `api/v1/reports/{id}`.  
+**Response**  
+`@TODO`  
+**Sample Response**  
+`@TODO`
+
+## TESTING
+- `composer test` to run phpunit tests.
+- `composer test-f` to run filtered phpunit tests.
+- `composer php-cs-fixer` for linting.
+
 ## About
 
 What is this project about. Ok to enrich here or the section above it with an image. 
