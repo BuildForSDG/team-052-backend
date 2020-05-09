@@ -49,19 +49,20 @@ class MakeAdmin extends Command
 
         Model::unguard();
 
-        $user = User::firstOrNew([
+        $user = User::firstOrNew(
+            [
             'email' =>  $email
         ],
-        [
+            [
             'password'  => $hashedPassword,
             'admin_role'  =>  'superadmin'
-        ]);
+        ]
+        );
         $user->save();
 
         Model::reguard();
 
-        if($user)
-        {
+        if ($user) {
             $this->comment('user created successfully!');
         } else {
             $this->error('user not created successfully');

@@ -26,40 +26,40 @@ class ReportController extends Controller
      *
      * @return \Illuminate\Http\Response|\Laravel\Lumen\Http\ResponseFactory
      */
-    public function store(Request $request)
+    /*public function store(Request $request)
     {
         //
-    }
+    }*/
 
     /**
      * Read a single report by its id
      *
      * @return \Illuminate\Http\Response|\Laravel\Lumen\Http\ResponseFactory
      */
-    public function read($id)
+    /*public function read($id)
     {
         //
-    }
+    }*/
 
     /**
      * Update the status of a report
      *
      * @return \Illuminate\Http\Response|\Laravel\Lumen\Http\ResponseFactory
      */
-    public function update(Request $request, $id)
+    /*public function update(Request $request, $id)
     {
         //
-    }
+    }*/
 
     /**
      * Delete a report from the database
      *
      * @return \Illuminate\Http\Response|\Laravel\Lumen\Http\ResponseFactory
      */
-    public function delete($id)
+    /*public function delete($id)
     {
         //
-    }
+    }*/
 
     /**
      * Display a listing of all reports
