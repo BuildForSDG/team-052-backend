@@ -4,21 +4,31 @@ A one-liner phrase describing this project or app
 [![Codacy Badge](https://img.shields.io/badge/Code%20Quality-D-red)](https://img.shields.io/badge/Code%20Quality-D-red)
 
 ## Api Documentation
+
 To use this api on your local machine,
+
 1. Rename the `.env.example` to `.env`.
-2. In this file, replace the `DB_DATABASE`, `DB_USERNAME` and `DB_PASSWORD` values with your database name on your local machine, the database username and password. 
+2. In this file, replace the `DB_DATABASE`, `DB_USERNAME` and `DB_PASSWORD` values with your database name on your local machine, the database username and password.
 3. On your command prompt run `php artisan migrate --seed` to migrate the database tables and seed the reports table with demo data. (ensure you php local server is running).
 4. To create a default admin user run `php artisan make:admin`.
 5. To see the reports made by users visit the endpoint `/api/v1/reports`.
 
 ## Endpoints
+
 ### Base Uri
-The api's base uri is `/api/v1/`
+
+The api's base uri is `/api/v1/`.
+
 ### List
+
 To get a list of all items of a resource (e.g reports), make a GET request to the endpoint `/api/v1/reports/`.  
-**Response**  
-You should receive a json response with status `200`, a `data` key containing an array of reports and `meta` key containing pagination details.  
-**Sample Response**  
+
+#### Response  
+
+You should receive a json response with status `200`, a `data` key containing an array of reports and `meta` key containing pagination details.
+
+#### Sample Response
+
 ```json
 {
   "meta": {
@@ -45,7 +55,9 @@ You should receive a json response with status `200`, a `data` key containing an
    ]
  }
 ```
+
 ### Create
+
 To create a resource, make a POST request to the the endpoint `api/v1/reports`.  
 **Response**  
 `@TODO`  
@@ -53,6 +65,7 @@ To create a resource, make a POST request to the the endpoint `api/v1/reports`.
 `@TODO`
 
 ### Read
+
 To read a single resource, make a GET request to the the endpoint `api/v1/reports/{id}`.  
 **Response**  
 `@TODO`  
@@ -60,6 +73,7 @@ To read a single resource, make a GET request to the the endpoint `api/v1/report
 `@TODO`
 
 ### Update
+
 To update a resource, make a PATCH request to the the endpoint `api/v1/reports/{id}`.  
 **Response**  
 `@TODO`  
@@ -67,6 +81,7 @@ To update a resource, make a PATCH request to the the endpoint `api/v1/reports/{
 `@TODO`
 
 ### Delete
+
 To delete a resource, make a DELETE request to the the endpoint `api/v1/reports/{id}`.  
 **Response**  
 `@TODO`  
@@ -74,9 +89,10 @@ To delete a resource, make a DELETE request to the the endpoint `api/v1/reports/
 `@TODO`
 
 ## TESTING
-1. `composer test` to run phpunit tests.
-2. `composer test-f` to run filtered phpunit tests.
-3. `composer php-cs-fixer` for linting.
+
+1.  `composer test` to run phpunit tests.
+2.  `composer test-f` to run filtered phpunit tests.
+3.  `composer php-cs-fixer` for linting.
 
 ## About
 
@@ -97,8 +113,8 @@ This is a simple php starter repo template for setting up your project. The setu
 Talk about what problem this solves, what SDG(s) and SGD targets it addresses and why these are imoirtant
 
 ## Usage
- How would someone use what you have built, include URLs to the deployed app, service e.t.c when you have it setup
 
+How would someone use what you have built, include URLs to the deployed app, service e.t.c when you have it setup
 
 ## Setup
 
@@ -108,27 +124,29 @@ Run `composer install` and `composer dump-autoload` to get started.
 
 All tests should be written in the test folder.
 
-#### Hints
+### Hints
 
-- Test: `composer run test`
-- Install dependencies: `composer install <dep name>`
-- Lint: `composer run php-cs-fixer`
+-   Test: `composer run test`
+-   Install dependencies: `composer install <dep name>`
+-   Lint: `composer run php-cs-fixer`
 
 ## Authors
 
-1. Brian Tum - https://github.com/BrianTum
-2. Fred Nyakagwa - 
-3. John Mnyika - https://github.com/JohnMnyika
-4. Daniel Kimani - https://github.com/suhade
-5. Basele Stephen - TTL - https://github.com/Basele
-6. Timothy Onyiuke - Mentor - https://github.com/timolinn
+1. Brian Tum - <https://github.com/BrianTum>
+2. Fred Nyakagwa -
+3. John Mnyika - <https://github.com/JohnMnyika>
+4. Daniel Kimani - <https://github.com/suhade>
+5. Basele Stephen - TTL - <https://github.com/Basele>
+6. Timothy Onyiuke - Mentor - <https://github.com/timolinn>
 
 ## Contributing
+
 If this project sounds interesting to you and you'd like to contribute, thank you!
 First, you can send a mail to buildforsdg@andela.com to indicate your interest, why you'd like to support and what forms of support you can bring to the table, but here are areas we think we'd need the most help in this project :
-1.  area one (e.g this app is about human trafficking and you need feedback on your roadmap and feature list from the private sector / NGOs)
-2.  area two (e.g you want people to opt-in and try using your staging app at staging.project-name.com and report any bugs via a form)
-3.  area three (e.g here is the zoom link to our end-of sprint webinar, join and provide feedback as a stakeholder if you can)
+
+1. area one (e.g this app is about human trafficking and you need feedback on your roadmap and feature list from the private sector / NGOs)
+2. area two (e.g you want people to opt-in and try using your staging app at staging.project-name.com and report any bugs via a form)
+3. area three (e.g here is the zoom link to our end-of sprint webinar, join and provide feedback as a stakeholder if you can)
 
 ## Acknowledgements
 
@@ -139,4 +157,5 @@ Did someone’s blog post spark off a wonderful idea or give you a solution to n
 It's powerful to always give credit.
 
 ## LICENSE
+
 MIT
