@@ -74,9 +74,9 @@ To delete a resource, make a DELETE request to the the endpoint `api/v1/reports/
 `@TODO`
 
 ## TESTING
--  `composer test` to run phpunit tests.
--  `composer test-f` to run filtered phpunit tests.
--  `composer php-cs-fixer` for linting.
+1. `composer test` to run phpunit tests.
+2. `composer test-f` to run filtered phpunit tests.
+3. `composer php-cs-fixer` for linting.
 
 ## About
 
