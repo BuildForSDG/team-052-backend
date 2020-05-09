@@ -7,11 +7,11 @@ A one-liner phrase describing this project or app
 
 To use this api on your local machine,
 
-1. Rename the `.env.example` to `.env`.
-2. In this file, replace the `DB_DATABASE`, `DB_USERNAME` and `DB_PASSWORD` values with your database name on your local machine, the database username and password.
-3. On your command prompt run `php artisan migrate --seed` to migrate the database tables and seed the reports table with demo data. (ensure you php local server is running).
-4. To create a default admin user run `php artisan make:admin`.
-5. To see the reports made by users visit the endpoint `/api/v1/reports`.
+1.  Rename the `.env.example` to `.env`.
+2.  In this file, replace the `DB_DATABASE`, `DB_USERNAME` and `DB_PASSWORD` values with your database name on your local machine, the database username and password.
+3.  On your command prompt run `php artisan migrate --seed` to migrate the database tables and seed the reports table with demo data. (ensure you php local server is running).
+4.  To create a default admin user run `php artisan make:admin`.
+5.  To see the reports made by users visit the endpoint `/api/v1/reports`.
 
 ## Endpoints
 
@@ -102,11 +102,11 @@ Once this repo has been setup on Codacy by the TTL, replace the above badge with
 
 This is a simple php starter repo template for setting up your project. The setup contains
 
-- Composer: For adding third party dependencies
+-   Composer: For adding third party dependencies
 
-- phpunit: For runnung tests
+-   phpunit: For runnung tests
 
-- php-cs-fixer: For formatting code to match php coding standard
+-   php-cs-fixer: For formatting code to match php coding standard
 
 ## Why
 
@@ -132,21 +132,21 @@ All tests should be written in the test folder.
 
 ## Authors
 
-1. Brian Tum - <https://github.com/BrianTum>
-2. Fred Nyakagwa -
-3. John Mnyika - <https://github.com/JohnMnyika>
-4. Daniel Kimani - <https://github.com/suhade>
-5. Basele Stephen - TTL - <https://github.com/Basele>
-6. Timothy Onyiuke - Mentor - <https://github.com/timolinn>
+1.  Brian Tum - <https://github.com/BrianTum>
+2.  Fred Nyakagwa -
+3.  John Mnyika - <https://github.com/JohnMnyika>
+4.  Daniel Kimani - <https://github.com/suhade>
+5.  Basele Stephen - TTL - <https://github.com/Basele>
+6.  Timothy Onyiuke - Mentor - <https://github.com/timolinn>
 
 ## Contributing
 
 If this project sounds interesting to you and you'd like to contribute, thank you!
 First, you can send a mail to buildforsdg@andela.com to indicate your interest, why you'd like to support and what forms of support you can bring to the table, but here are areas we think we'd need the most help in this project :
 
-1. area one (e.g this app is about human trafficking and you need feedback on your roadmap and feature list from the private sector / NGOs)
-2. area two (e.g you want people to opt-in and try using your staging app at staging.project-name.com and report any bugs via a form)
-3. area three (e.g here is the zoom link to our end-of sprint webinar, join and provide feedback as a stakeholder if you can)
+1.  area one (e.g this app is about human trafficking and you need feedback on your roadmap and feature list from the private sector / NGOs)
+2.  area two (e.g you want people to opt-in and try using your staging app at staging.project-name.com and report any bugs via a form)
+3.  area three (e.g here is the zoom link to our end-of sprint webinar, join and provide feedback as a stakeholder if you can)
 
 ## Acknowledgements
 
