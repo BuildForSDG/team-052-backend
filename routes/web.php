@@ -17,6 +17,8 @@ $router->group([
     'as'  =>  'api'
 ], function () use ($router) {
 
+    $router->get('/dashboard', ['as' => 'dashboard', 'uses' => 'DashboardController@index']);
+
     // reports endpoint
     $router->group([
         'prefix' => 'reports',
@@ -31,5 +33,9 @@ $router->group([
         $router->delete('{id}', ['as' => 'delete', 'uses' => 'ReportController@delete']);
 
         $router->get('', ['as' => 'list', 'uses' => 'ReportController@list']);
+
+        $router->get('', ['as' => 'list', 'uses' => 'UserReportController@list']);
+
+        $router->get('mark_incident/{id}', ['as' => 'mark_incident', 'uses' => 'ReportController@mark_incident']);
     });
 });
