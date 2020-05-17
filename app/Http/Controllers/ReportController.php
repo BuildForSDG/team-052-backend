@@ -72,4 +72,12 @@ class ReportController extends Controller
 
         return $this->listResponse($this->extractItemsFrom($reports), $this->extractMetaFrom($reports));
     }
+
+    public function status($id)
+    {
+        $reports = Report::find($id);
+        //$reports->status  (to be edited later)
+        $reports->save();
+        return redirect()->back();
+    }
 }
