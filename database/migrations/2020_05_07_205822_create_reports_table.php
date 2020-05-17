@@ -19,7 +19,7 @@ class CreateReportsTable extends Migration
             // short note can be left behind by the reporter
             $table->text('note')->nullable();
             // defaults to pending
-            $table->char('status');
+            $table->char('status')->default(0);
             $table->string('location');
             $table->string('visual_image');
             $table->timestamp('time_of_report')->nullable();
