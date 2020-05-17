@@ -36,6 +36,6 @@ $router->group([
 
         $router->get('', ['as' => 'list', 'uses' => 'UserReportController@list']);
 
-        $router->get('mark_incident/{id}', ['as' => 'mark_incident', 'uses' => 'ReportController@mark_incident']);
+        $router->get('{id}', ['as' => 'status', 'uses' => 'ReportController@status']);
     });
 });
