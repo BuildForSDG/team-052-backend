@@ -1,6 +1,9 @@
 <?php
 
+namespace Tests\Feature\Command;
+
 use Laravel\Lumen\Testing\DatabaseMigrations;
+use Tests\TestCase;
 
 class MakeAdminTest extends TestCase
 {

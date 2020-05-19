@@ -1,5 +1,7 @@
 <?php
 
+namespace Tests\Utils;
+
 use Illuminate\Support\Facades\Schema;
 use Laravel\Lumen\Testing\DatabaseMigrations;
 

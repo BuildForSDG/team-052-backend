@@ -1,6 +1,9 @@
 <?php
 
+namespace Tests\Feature;
+
 use Laravel\Lumen\Testing\DatabaseMigrations;
+use Tests\TestCase;
 
 class ReportEndpointTest extends TestCase
 {
@@ -9,6 +12,8 @@ class ReportEndpointTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+
+        $this->withoutMiddleware();
 
         $this->artisan('db:seed');
     }

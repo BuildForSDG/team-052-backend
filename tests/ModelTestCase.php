@@ -1,5 +1,10 @@
 <?php
 
+namespace Tests;
+
+use Tests\Utils\TestsDatabase;
+use Tests\Utils\TestsModel;
+
 abstract class ModelTestCase extends TestCase
 {
     use TestsDatabase, TestsModel;

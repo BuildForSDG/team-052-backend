@@ -1,5 +1,7 @@
 <?php
 
+namespace Tests\Utils;
+
 use Illuminate\Database\Eloquent\Model;
 
 trait TestsModel

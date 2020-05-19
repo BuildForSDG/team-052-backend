@@ -1,6 +1,9 @@
 <?php
 
+namespace Tests\Unit;
+
 use App\User;
+use Tests\ModelTestCase;
 
 class UserTest extends ModelTestCase
 {

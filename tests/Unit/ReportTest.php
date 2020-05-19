@@ -1,6 +1,9 @@
 <?php
 
+namespace Tests\Unit;
+
 use App\Report;
+use Tests\ModelTestCase;
 
 class ReportTest extends ModelTestCase
 {
