@@ -88,6 +88,113 @@ To delete a resource, make a DELETE request to the the endpoint `api/v1/reports/
 **Sample Response**  
 `@TODO`
 
+## Authentication & Authorization
+
+All requests to `/api/v1/reports` requires authorization. You'll need to add an `Authorization: Bearer your_api_token` header to your request else you receive a `401` error code.
+
+### Login
+
+To receive your api token, make a **POST** request to `/api/v1/auth/login` with your registered email and password.
+
+#### Example
+
+```javascript
+axios.post('/api/v1/auth/login`, {
+    data: {
+        email: 'admin@example.com',
+        password: password
+    }
+}).then(res=>{
+    let token = res.data.data.api_token;
+    // store your api token
+});
+```
+
+**Expect the following response:**
+
+```json
+{
+    "message": "login successful",
+    "data": {
+        "api_token": "MTU5YmdPUGZQNVVNa1hYS1pxSExMVHY5SW1PZnRiNlI2bU55Tk1nVw=="
+    }
+}
+```
+
+**Making subsequent requests:**
+
+```javascript
+axios.post('/api/v1/reports`, {
+    headers: {
+        Authorization: 'Bearer MTU5YmdPUGZQNVVNa1hYS1pxSExMVHY5SW1PZnRiNlI2bU55Tk1nVw=='
+    }
+}).then(res=>{
+    //
+});
+```
+
+#### Authentication error
+
+Sending invalid credentials when logging in responds with a `422` http error code.
+
+##### Example Responses
+
+```json
+{
+    "message": "The given data was invalid.",
+    "errors": {
+        "email": [
+            "invalid email or password"
+        ]
+    }
+}
+```
+
+```json
+{
+    "message": "The given data was invalid.",
+    "errors": {
+        "email": [
+            "The email field is required."
+        ],
+        "password": [
+            "The password field is required."
+        ]
+    }
+}
+```
+
+#### Access the details of the current logged in user
+
+Make a GET request to `/api/v1/me`
+
+**Sample response**
+
+```json
+{
+    "data": {
+        "id": 1,
+        "name": null,
+        "email": "admin@example.com",
+        "admin_role": "superadmin",
+        "created_at": "2020-05-09T01:08:00.000000Z",
+        "updated_at": "2020-05-20T13:26:30.000000Z"
+    }
+}
+```
+
+### Logout
+
+To logout, make a post request to `/api/v1/auth/logout` with your api token in Authorization header.
+
+**Sample response**
+
+```json
+{
+    "message": "logout successful"
+}
+```
+
 ## TESTING
 
 1.  `composer test` to run phpunit tests.
