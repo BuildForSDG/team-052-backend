@@ -54,6 +54,10 @@ $router->group([
         // these routes can only be accessible by an authenticated user
         Route::group(['middleware' => ['auth']], function ($router) {
 
+            // Gets report metrics
+            // e.g GET req to http://localhost/api/v1/reports/metrics
+            $router->get('metrics', ['as' => 'metrics', 'uses' => 'ReportController@metrics']);
+
             // frontend client reads a single report through this route
             // e.g GET req to http://localhost/api/v1/reports/1
             $router->get('{id}', ['as' => 'read', 'uses' => 'ReportController@read']);
@@ -69,10 +73,6 @@ $router->group([
             // Displays a listing of all reports
             // e.g GET req to http://localhost/api/v1/reports
             $router->get('', ['as' => 'list', 'uses' => 'ReportController@list']);
-
-            // Gets report metrics
-            // e.g GET req to http://localhost/api/v1/reports/metrics
-            $router->get('metrics', ['as' => 'metrics', 'uses' => 'ReportController@metrics']);
         });
     });
 
