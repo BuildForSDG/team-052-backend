@@ -26,7 +26,7 @@ $router->group([
         'as' => 'auth'  // route('api.auth')
     ], function () use ($router) {
 
-        // front end client logges in through this route
+        // front end client logs in through this route
         // e.g POST req to http://localhost/api/v1/auth/login
         // route name: 'api.auth.login'
         $router->post('login', [ 'as' => 'login', 'uses' => 'AuthController@login' ]);
@@ -84,5 +84,19 @@ $router->group([
         $router->get('reports', ['as' => 'reports', 'uses' => 'GuestController@reports']);
 
         $router->get('metrics', ['as' => 'metrics', 'uses' => 'GuestController@metrics']);
+    });
+
+    /*
+     | ----------------------------------------------------------
+     | This group of routes is for handling user specific actions
+     | ----------------------------------------------------------
+     */
+    $router->group([
+        'prefix' => 'users',
+        'as' => 'users',
+        'middleware' => ['auth']
+    ], function () use ($router){
+        // route for creating a new user
+        $router->post('', ['as' => 'store', 'uses' => 'UserController@store']);
     });
 });

@@ -20,7 +20,8 @@ To use this api on your local machine,
 | GET       	| `/api/v1/reports`       	| reports#list      	| Displays a listing of all reports                    	|
 | POST      	| `/api/v1/auth/login`    	| auth#login        	| Authenticates a user                                 	|
 | POST      	| `/api/v1/auth/logout`   	| auth#logout       	| Logs out a user out  of the application              	|
-| GET       	| `/api/v1/guest/reports` 	| guest#reports     	| Displays a listing of all  reports to the guest users 	|
+| GET       	| `/api/v1/guest/reports` 	| guest#reports     	| Displays a listing of all  reports to the guest users |
+| POST       	| `/api/v1/users`           | users#store     	    | Create a new admin user 	                            |
 
 ### Base Uri
 

@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Utils\RespondsWithJson;
 use App\Http\Controllers\Utils\SimplePaginates;
-use Illuminate\Http\Client\Request;
+use App\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
@@ -19,12 +22,36 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-        // @issue 8
-        // write your store logics here
-        //
+        if (! $request->user()->isSuperAdmin()) {
+            abort(403, 'You dont not have the permission to create an admin');
+        }
 
-        // afterwards, return a store response with
-        // an instance of model  of the user created
-        // return $this->storeResponse($admin);
+        $data = $this->validate($request, $this->creationRules());
+        $password = Hash::make($data['password']);
+
+        $admin = new User;
+        $admin->name = $data['name'];
+        $admin->email = $data['email'];
+        $admin->password = $password;
+        $admin->admin_role = $data['admin_role'];
+
+        $admin->save();
+
+        return $this->storeResponse($admin);
+    }
+
+    /**
+     * Validation rules on creation
+     *
+     * @return array
+     */
+    protected function creationRules()
+    {
+        return [
+            'name' => ['required'],
+            'email' => ['required', 'email', 'unique:users'],
+            'password' => ['required'],
+            'admin_role' => ['nullable', Rule::in(['superadmin', 'responder'])]
+        ];
     }
 }

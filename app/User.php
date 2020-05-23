@@ -29,4 +29,23 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     protected $hidden = [
         'password', 'api_token'
     ];
+
+    /**
+     * Default attributes
+     *
+     * @var array
+     */
+    protected $attributes = [
+        'admin_role' => 'responder' //options are superadmin and responder
+    ];
+
+    /**
+     * Check if the user is superadmin
+     *
+     * @return bool
+     */
+    public function isSuperAdmin()
+    {
+        return $this->admin_role === 'superadmin';
+    }
 }
