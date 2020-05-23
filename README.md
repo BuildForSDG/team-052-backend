@@ -17,10 +17,10 @@ To use this api on your local machine,
 
 | Http Verb 	| Path                  	| Controller#action 	| Used for                                             	|
 |-----------	|-----------------------	|-------------------	|------------------------------------------------------	|
-| GET       	| /api/v1/reports       	| reports#list      	| Displays a listing of all reports                    	|
-| POST      	| /api/v1/auth/login    	| auth#login        	| Authenticates a user                                 	|
-| POST      	| /api/v1/auth/logout   	| auth#logout       	| Logs out a user out  of the application              	|
-| GET       	| /api/v1/guest/reports 	| guest#reports     	| Displays a listing of all  reports to the guest user 	|
+| GET       	| `/api/v1/reports`       	| reports#list      	| Displays a listing of all reports                    	|
+| POST      	| `/api/v1/auth/login`    	| auth#login        	| Authenticates a user                                 	|
+| POST      	| `/api/v1/auth/logout`   	| auth#logout       	| Logs out a user out  of the application              	|
+| GET       	| `/api/v1/guest/reports` 	| guest#reports     	| Displays a listing of all  reports to the guest users 	|
 
 ### Base Uri
 
