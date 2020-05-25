@@ -26,7 +26,7 @@ trait RespondsWithJson
      * @param \Illuminate\Database\Eloquent\Model $model
      * @return \Illuminate\Http\Response|\Laravel\Lumen\Http\ResponseFactory
      */
-    protected function readResponse(Model $model)
+    protected function readResponse($model)
     {
         return response()->json([
             'data' =>  $model
