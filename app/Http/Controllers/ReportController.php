@@ -100,13 +100,15 @@ class ReportController extends Controller
         }elseif(!empty($request->time)){
             $reports = Report::where('time_of_report', $request->time)->simplePaginate();
             return $reports;            
-        }else{
+        }elseif(!empty($request->location)){
+            $reports = Report::where('location', $request->location)->simplePaginate();
+            return $reports;            
+        }
+        else{
         $reports = Report::orderBy('id', 'desc')->simplePaginate();
         return $reports;
         }
         return $this->listResponse($this->extractItemsFrom($reports), $this->extractMetaFrom($reports));            
-
-
     }
 
     /**
