@@ -19,7 +19,9 @@ class GuestController extends Controller
     {
         //@issue 2
         // As a user, I want to be able to view recently reported incidents
-        $reports = Report::where('title', 'location', 'visual_image', 'time_of_report')->orderBy('time_of_report', 'desc')->simplePaginate();
+        $reports = Report::where('title', 'location', 'visual_image', 'time_of_report')
+        ->orderBy('time_of_report', 'desc')
+        ->simplePaginate();
 
         return $this->listResponse($this->extractItemsFrom($reports), $this->extractMetaFrom($reports));
     }
