@@ -34,16 +34,19 @@ class GuestController extends Controller
         //@issue 4
         // As a user, I want to be able to view the progress metric,
         // so that I can evaluate the response rate of the team
+        $reported_cases = Report::count();
+        $pending_cases = Report::where('status', 'pending')->count();
+        $enroute_cases = Report::where('status', 'enroute')->count();
+        $onsite_cases = Report::where('status', 'onsite')->count();
+        $acknowledged_cases = Report::where('status', 'acknowledged')->count();
 
-        // write your logic here to calculate the progress metric
-        // this method should also perform the same operation
-        // as in the reports controller metrics
-
-        // tip: you can create a trait or class that calculates this metric
-        // and use it for this controller and the reports controller
-
-        return reponse()->json([
-            //'data' => $metrics e.g { 'response_rate': 60%, 'reported_cases': 200 } e.t.c
+        return response()->json([
+            'metrics' => view ('metrics')
+            ->with('reported_cases', $reported_cases)
+            ->with('pending_cases', $pending_cases)
+            ->with('enroute_cases', $enroute_cases)
+            ->with('onsite_cases', $onsite_cases)
+            ->with('acknowledged_cases', $acknowledged_cases)
         ], 200);
     }
 }
