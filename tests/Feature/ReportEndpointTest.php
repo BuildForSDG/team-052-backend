@@ -31,4 +31,35 @@ class ReportEndpointTest extends TestCase
             'meta',
         ]);
     }
+
+    public function testReadEndpoint()
+    {
+        $uri = route('api.reports.read', [
+            'id' => 1
+        ]);
+
+        $res = $this->get($uri);
+
+        $res->assertResponseStatus(200);
+
+        $res->seeJsonStructure([
+            'data',
+        ]);
+    }
+
+    public function testShould_FilterIncidents_By_Status()
+    {
+        $uri = route('api.reports.list', [
+            'status' => 'enroute'
+        ]);
+
+        $res = $this->get($uri);
+
+        $res->assertResponseStatus(200);
+
+        $res->seeJsonStructure([
+            'data',
+            'meta',
+        ]);
+    }
 }
