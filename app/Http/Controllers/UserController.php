@@ -33,7 +33,7 @@ class UserController extends Controller
         $admin->name = $data['name'];
         $admin->email = $data['email'];
         $admin->password = $password;
-        $admin->admin_role = $data['admin_role'];
+        $admin->admin_role = $data['admin_role'] ?? 'responder';
 
         $admin->save();
 
