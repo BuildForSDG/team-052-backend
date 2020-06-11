@@ -118,9 +118,9 @@ class ReportController extends Controller
      */
     public function metrics()
     {
-        //@issue 4
-        // As a user, I want to be able to view the progress metric,
-        // so that I can evaluate the response rate of the team
+        //@issue 10
+        // As an admin, I want to be able to view our progress metric,
+        //so I can better report my response success
 
         // write your logic here to calculate the progress metric
         // this method should also perform the same operation
@@ -128,6 +128,8 @@ class ReportController extends Controller
 
         // tip: you can create a trait or class that calculates this metric
         // and use it for this controller and the reports controller
+        $reported_cases = Report::count();
+        $pending_cases = Report::where('status', 'pending')->count();
 
         return reponse()->json([
             //'data' => $metrics e.g { 'response_rate': 60%, 'reported_cases': 200 } e.t.c
