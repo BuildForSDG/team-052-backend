@@ -26,7 +26,7 @@ class ReportController extends Controller
      *
      * @return \Illuminate\Http\Response|\Laravel\Lumen\Http\ResponseFactory
      */
-    public function store(Request $request)
+    /*public function store(Request $request)
     {
         // perform storage logic here
 
@@ -35,24 +35,19 @@ class ReportController extends Controller
         // return a store response with an instance of the reported model
 
         //return $this->storeResponse($report);
-    }
+    }*/
 
     /**
      * Read a single report by its id
      *
+     * @param int $id
      * @return \Illuminate\Http\Response|\Laravel\Lumen\Http\ResponseFactory
      */
     public function read(int $id)
     {
-        // @issue 6
-        // As an admin, I want to be able to know the time of report,
-        // location, visual feedback and reporter of an incident.
+        $report = Report::findOrFail($id);
 
-        // write logic here to extract
-        // the report from the database by its id
-
-        // return a read response with an instance of the report model
-        // return $this->readResponse($report)
+        return $this->readResponse($report);
     }
 
     /**
@@ -80,22 +75,29 @@ class ReportController extends Controller
      *
      * @return \Illuminate\Http\Response|\Laravel\Lumen\Http\ResponseFactory
      */
-    public function delete($id)
+    /*public function delete($id)
     {
         // write logic to delete a report from the database
 
         return $this->deleteResponse();
-    }
+    }*/
 
     /**
      * Display a listing of all reports
      *
      * @return \Illuminate\Http\Response|\Laravel\Lumen\Http\ResponseFactory
      */
-    public function list()
+    public function list(Request $request)
     {
-        $reports = Report::orderBy('id', 'desc')->simplePaginate();
-
+        if(!empty($request->status)){
+            $reports = Report::where('status', $request->status)->orderBy('id', 'desc')->simplePaginate();
+        }elseif(!empty($request->time)){
+            $reports = Report::where('time_of_report', $request->time)->orderBy('id', 'desc')->simplePaginate();
+        }elseif(!empty($request->location)){
+            $reports = Report::where('location', $request->location)->orderBy('id', 'desc')->simplePaginate();
+        } else {
+            $reports = Report::orderBy('id', 'desc')->simplePaginate();
+        }
         return $this->listResponse($this->extractItemsFrom($reports), $this->extractMetaFrom($reports));
     }
 
