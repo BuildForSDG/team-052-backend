@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Utils\RespondsWithJson;
 use App\Http\Controllers\Utils\SimplePaginates;
 use App\Report;
+use Illuminate\Http\Request;
 
 class GuestController extends Controller
 {
@@ -13,13 +14,22 @@ class GuestController extends Controller
     /**
      * Get recently reported incidents
      *
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function reports()
+    public function reports(Request $request)
     {
-        //@issue 2
-        // As a user, I want to be able to view recently reported incidents
-        $reports = Report::where('title', 'location', 'visual_image', 'time_of_report')->orderBy('time_of_report', 'desc')->simplePaginate();
+        if (!empty($request->status)) {
+            $reports = Report::where('status', $request->status)->orderBy('id', 'desc');
+        } elseif (!empty($request->time)) {
+            $reports = Report::where('time_of_report', $request->time)->orderBy('id', 'desc');
+        } elseif (!empty($request->location)) {
+            $reports = Report::where('location', $request->location)->orderBy('id', 'desc');
+        } else {
+            $reports = Report::orderBy('id', 'desc');
+        }
+
+        $reports = $reports->select('title', 'location', 'visual_image', 'time_of_report')->simplePaginate();
 
         return $this->listResponse($this->extractItemsFrom($reports), $this->extractMetaFrom($reports));
     }
@@ -34,16 +44,12 @@ class GuestController extends Controller
         //@issue 4
         // As a user, I want to be able to view the progress metric,
         // so that I can evaluate the response rate of the team
+        $reported_cases = Report::count();
+        $pending_cases = Report::where('status', 'pending')->count();
+        $enroute_cases = Report::where('status', 'enroute')->count();
+        $onsite_cases = Report::where('status', 'onsite')->count();
+        $acknowledged_cases = Report::where('status', 'acknowledged')->count();
 
-        // write your logic here to calculate the progress metric
-        // this method should also perform the same operation
-        // as in the reports controller metrics
-
-        // tip: you can create a trait or class that calculates this metric
-        // and use it for this controller and the reports controller
-
-        return reponse()->json([
-            //'data' => $metrics e.g { 'response_rate': 60%, 'reported_cases': 200 } e.t.c
-        ], 200);
+        return response()->json(compact('reported_cases', 'pending_cases', 'enroute_cases', 'onsite_cases', 'acknowledged_cases'), 200);
     }
 }

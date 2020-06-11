@@ -6,6 +6,7 @@ use App\Http\Controllers\Utils\RespondsWithJson;
 use App\Http\Controllers\Utils\SimplePaginates;
 use App\Report;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class ReportController extends Controller
 {
@@ -26,7 +27,7 @@ class ReportController extends Controller
      *
      * @return \Illuminate\Http\Response|\Laravel\Lumen\Http\ResponseFactory
      */
-    public function store(Request $request)
+    /*public function store(Request $request)
     {
         // perform storage logic here
 
@@ -35,24 +36,19 @@ class ReportController extends Controller
         // return a store response with an instance of the reported model
 
         //return $this->storeResponse($report);
-    }
+    }*/
 
     /**
      * Read a single report by its id
      *
+     * @param int $id
      * @return \Illuminate\Http\Response|\Laravel\Lumen\Http\ResponseFactory
      */
-    public function read(Request $request, int $id)
+    public function read(int $id)
     {
-        // @issue 6
-        // As an admin, I want to be able to know the time of report,
-        // location, visual feedback and reporter of an incident.
+        $report = Report::findOrFail($id);
 
-        // write logic here to extract
-        // the report from the database by its id
-
-        // return a read response with an instance of the report model
-        // return $this->readResponse($report)
+        return $this->readResponse($report);
     }
 
     /**
@@ -62,14 +58,15 @@ class ReportController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //@issue 7
-        // As an admin, I want to be able to mark an incident as pending, enroute, onsite, or acknowledged
+        $report = Report::findOrFail($id);
 
-        // write logic here to update the status of a report
-        // get the new status with $request->input('status')
-        // ensure to validate the status against allowed statuses. i.e pending, acknowledged, enroute, e.t.c
-        // tip: use Rule::in($allowed_statuses) to validate against required statuses
+        $data = $this->validate($request, [
+            'status' => ['required', Rule::in(['pending', 'acknowledged', 'enroute'])]
+        ]);
+        $status = $data['status'];
 
+        $report->status = $status;
+        $report->save();
 
         // return an updateResponse afterwards
         return $this->updateResponse();
@@ -80,12 +77,12 @@ class ReportController extends Controller
      *
      * @return \Illuminate\Http\Response|\Laravel\Lumen\Http\ResponseFactory
      */
-    public function delete($id)
+    /*public function delete($id)
     {
         // write logic to delete a report from the database
 
         return $this->deleteResponse();
-    }
+    }*/
 
     /**
      * Display a listing of all reports
@@ -94,21 +91,16 @@ class ReportController extends Controller
      */
     public function list(Request $request)
     {
-        if(!empty($request->status)){
-            $reports = Report::where('status', $request->status)->simplePaginate();
-            return $reports;
-        }elseif(!empty($request->time)){
-            $reports = Report::where('time_of_report', $request->time)->simplePaginate();
-            return $reports;            
-        }elseif(!empty($request->location)){
-            $reports = Report::where('location', $request->location)->simplePaginate();
-            return $reports;            
+        if (!empty($request->status)) {
+            $reports = Report::where('status', $request->status)->orderBy('id', 'desc')->simplePaginate();
+        } elseif (!empty($request->time)) {
+            $reports = Report::where('time_of_report', $request->time)->orderBy('id', 'desc')->simplePaginate();
+        } elseif (!empty($request->location)) {
+            $reports = Report::where('location', $request->location)->orderBy('id', 'desc')->simplePaginate();
+        } else {
+            $reports = Report::orderBy('id', 'desc')->simplePaginate();
         }
-        else{
-        $reports = Report::orderBy('id', 'desc')->simplePaginate();
-        return $reports;
-        }
-        return $this->listResponse($this->extractItemsFrom($reports), $this->extractMetaFrom($reports));            
+        return $this->listResponse($this->extractItemsFrom($reports), $this->extractMetaFrom($reports));
     }
 
     /**
@@ -118,21 +110,12 @@ class ReportController extends Controller
      */
     public function metrics()
     {
-        //@issue 10
-        // As an admin, I want to be able to view our progress metric,
-        //so I can better report my response success
-
-        // write your logic here to calculate the progress metric
-        // this method should also perform the same operation
-        // as in the reports controller metrics
-
-        // tip: you can create a trait or class that calculates this metric
-        // and use it for this controller and the reports controller
         $reported_cases = Report::count();
         $pending_cases = Report::where('status', 'pending')->count();
+        $enroute_cases = Report::where('status', 'enroute')->count();
+        $onsite_cases = Report::where('status', 'onsite')->count();
+        $acknowledged_cases = Report::where('status', 'acknowledged')->count();
 
-        return reponse()->json([
-            //'data' => $metrics e.g { 'response_rate': 60%, 'reported_cases': 200 } e.t.c
-        ], 200);
+        return response()->json(compact('reported_cases', 'pending_cases', 'enroute_cases', 'onsite_cases', 'acknowledged_cases'), 200);
     }
 }

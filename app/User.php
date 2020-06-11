@@ -36,7 +36,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var array
      */
     protected $attributes = [
-        'admin_role' => 'responder' //options are superadmin and responder
+        'admin_role' => null //options are superadmin and responder
     ];
 
     /**
