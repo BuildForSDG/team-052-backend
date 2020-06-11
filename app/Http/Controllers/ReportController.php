@@ -6,6 +6,7 @@ use App\Http\Controllers\Utils\RespondsWithJson;
 use App\Http\Controllers\Utils\SimplePaginates;
 use App\Report;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class ReportController extends Controller
 {
@@ -57,14 +58,15 @@ class ReportController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //@issue 7
-        // As an admin, I want to be able to mark an incident as pending, enroute, onsite, or acknowledged
+        $report = Report::findOrFail($id);
 
-        // write logic here to update the status of a report
-        // get the new status with $request->input('status')
-        // ensure to validate the status against allowed statuses. i.e pending, acknowledged, enroute, e.t.c
-        // tip: use Rule::in($allowed_statuses) to validate against required statuses
+        $data = $this->validate($request, [
+            'status' => ['required', Rule::in(['pending', 'acknowledged', 'enroute'])]
+        ]);
+        $status = $data['status'];
 
+        $report->status = $status;
+        $report->save();
 
         // return an updateResponse afterwards
         return $this->updateResponse();

@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Report;
 use Laravel\Lumen\Testing\DatabaseMigrations;
 use Tests\TestCase;
 
@@ -93,6 +94,26 @@ class ReportEndpointTest extends TestCase
         $res->seeJsonStructure([
             'data',
         ]);
+    }
+
+    public function testUpdateStatusEndpoint()
+    {
+        $report = Report::find(1);
+        $new_status = 'acknowledged';
+
+        $uri = route('api.reports.update', [
+            'id' => $report->id
+        ]);
+
+        $res = $this->patch($uri, [
+            'status' => $new_status
+        ]);
+
+        $res->assertResponseStatus(204);
+
+        $report = Report::find(1);
+
+        $this->assertEquals($new_status, $report->status);
     }
 
     public function testShould_FilterIncidents_By_Status()
