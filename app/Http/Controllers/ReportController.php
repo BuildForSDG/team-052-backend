@@ -42,7 +42,7 @@ class ReportController extends Controller
      *
      * @return \Illuminate\Http\Response|\Laravel\Lumen\Http\ResponseFactory
      */
-    public function read(int $id)
+    public function read(Request $request, int $id)
     {
         // @issue 6
         // As an admin, I want to be able to know the time of report,
@@ -92,11 +92,23 @@ class ReportController extends Controller
      *
      * @return \Illuminate\Http\Response|\Laravel\Lumen\Http\ResponseFactory
      */
-    public function list()
+    public function list(Request $request)
     {
+        if(!empty($request->status)){
+            $reports = Report::where('status', $request->status)->simplePaginate();
+            return $reports;
+        }elseif(!empty($request->time)){
+            $reports = Report::where('time_of_report', $request->time)->simplePaginate();
+            return $reports;            
+        }elseif(!empty($request->location)){
+            $reports = Report::where('location', $request->location)->simplePaginate();
+            return $reports;            
+        }
+        else{
         $reports = Report::orderBy('id', 'desc')->simplePaginate();
-
-        return $this->listResponse($this->extractItemsFrom($reports), $this->extractMetaFrom($reports));
+        return $reports;
+        }
+        return $this->listResponse($this->extractItemsFrom($reports), $this->extractMetaFrom($reports));            
     }
 
     /**

@@ -27,6 +27,7 @@ class GuestController extends Controller
 
         // return a list response just like in the report controller
         //return $this->listResponse($this->extractItemsFrom($reports), $this->extractMetaFrom($reports));
+        
     }
 
     /**
