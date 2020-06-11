@@ -15,13 +15,19 @@ To use this api on your local machine,
 
 ## Endpoints
 
-| Http Verb 	| Path                  	| Controller#action 	| Used for                                             	|
-|-----------	|-----------------------	|-------------------	|------------------------------------------------------	|
-| GET       	| `/api/v1/reports`       	| reports#list      	| Displays a listing of all reports                    	|
-| POST      	| `/api/v1/auth/login`    	| auth#login        	| Authenticates a user                                 	|
-| POST      	| `/api/v1/auth/logout`   	| auth#logout       	| Logs out a user out  of the application              	|
-| GET       	| `/api/v1/guest/reports` 	| guest#reports     	| Displays a listing of all  reports to the guest users |
-| POST       	| `/api/v1/users`           | users#store     	    | Create a new admin user 	                            |
+| Http Verb 	| Path                      	| Parameters 	| Controller#action 	| Used for                                                   	|
+|-----------	|---------------------------	|------------	|-------------------	|------------------------------------------------------------	|
+| GET       	| `/api/v1/reports`         	|            	| reports#list      	| Displays a listing of all reports                          	|
+| GET       	| `/api/v1/reports`         	| `status`   	| reports#list      	| Displays a listing of all reports by status                	|
+| PATCH     	| `/api/v1/reports/{id}`    	| `status`   	| reports#update    	| Update the status of a report                              	|
+| GET       	| `/api/v1/reports/metrics` 	|            	| reports#metrics   	| View metrics from admin                                    	|
+| POST      	| `/api/v1/auth/login`      	|            	| auth#login        	| Authenticates a user                                       	|
+| POST      	| `/api/v1/auth/logout`     	|            	| auth#logout       	| Logs out a user out  of the application                    	|
+| GET       	| `/api/v1/guest/reports`   	|            	| guest#reports     	| Displays a listing of all  reports to the guest users      	|
+| GET       	| `/api/v1/guest/reports`   	| `status`   	| guest#reports     	| Displays a listing of all reports by status to guest users 	|
+| GET       	| `/api/v1/guest/metrics`   	|            	| guest#metrics     	| View metrics                                               	|
+| POST      	| `/api/v1/users`           	|            	| users#store       	| Create a new admin user                                    	|
+| GET       	| `/api/v1/me`              	|            	| auth#me           	| View information about the current request user            	|
 
 ### Base Uri
 
