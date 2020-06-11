@@ -18,8 +18,6 @@ $router->group([
     'prefix' => 'api/v1',
     'as'  =>  'api'
 ], function () use ($router) {
-    $router->get('/dashboard', ['as' => 'dashboard', 'uses' => 'DashboardController@index']);
-
     // Authentication routes
     $router->group([
         'prefix' => 'auth', // /api/v1/auth
@@ -95,7 +93,7 @@ $router->group([
         'prefix' => 'users',
         'as' => 'users',
         'middleware' => ['auth']
-    ], function () use ($router){
+    ], function () use ($router) {
         // route for creating a new user
         $router->post('', ['as' => 'store', 'uses' => 'UserController@store']);
     });

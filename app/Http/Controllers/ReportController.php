@@ -91,11 +91,11 @@ class ReportController extends Controller
      */
     public function list(Request $request)
     {
-        if(!empty($request->status)){
+        if (!empty($request->status)) {
             $reports = Report::where('status', $request->status)->orderBy('id', 'desc')->simplePaginate();
-        }elseif(!empty($request->time)){
+        } elseif (!empty($request->time)) {
             $reports = Report::where('time_of_report', $request->time)->orderBy('id', 'desc')->simplePaginate();
-        }elseif(!empty($request->location)){
+        } elseif (!empty($request->location)) {
             $reports = Report::where('location', $request->location)->orderBy('id', 'desc')->simplePaginate();
         } else {
             $reports = Report::orderBy('id', 'desc')->simplePaginate();
