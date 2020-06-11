@@ -32,6 +32,54 @@ class ReportEndpointTest extends TestCase
         ]);
     }
 
+    public function testGuestListEndpoint()
+    {
+        $uri = route('api.guest.reports');
+
+        $res = $this->get($uri);
+
+        $res->assertResponseStatus(200);
+
+        $res->seeJsonStructure([
+            'data',
+            'meta',
+        ]);
+    }
+
+    public function testMetricsEndpoint()
+    {
+        $uri = route('api.reports.metrics');
+
+        $res = $this->get($uri);
+
+        $res->assertResponseStatus(200);
+
+        $res->seeJsonStructure([
+            'reported_cases',
+            'pending_cases',
+            'enroute_cases',
+            'onsite_cases',
+            'acknowledged_cases'
+        ]);
+    }
+
+    public function testGuestMetricsEndpoint()
+    {
+        $uri = route('api.guest.metrics');
+
+        $res = $this->get($uri);
+
+        $res->assertResponseStatus(200);
+
+        $res->seeJsonStructure([
+            'reported_cases',
+            'pending_cases',
+            'enroute_cases',
+            'onsite_cases',
+            'acknowledged_cases'
+        ]);
+    }
+
     public function testReadEndpoint()
     {
         $uri = route('api.reports.read', [

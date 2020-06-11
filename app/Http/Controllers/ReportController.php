@@ -108,22 +108,12 @@ class ReportController extends Controller
      */
     public function metrics()
     {
-        //@issue 10
-        // As an admin, I want to be able to view our progress metric,
-        //so I can better report my response success
         $reported_cases = Report::count();
         $pending_cases = Report::where('status', 'pending')->count();
         $enroute_cases = Report::where('status', 'enroute')->count();
         $onsite_cases = Report::where('status', 'onsite')->count();
         $acknowledged_cases = Report::where('status', 'acknowledged')->count();
 
-        return response()->json([
-            'metrics' => view ('metrics')
-            ->with('reported_cases', $reported_cases)
-            ->with('pending_cases', $pending_cases)
-            ->with('enroute_cases', $enroute_cases)
-            ->with('onsite_cases', $onsite_cases)
-            ->with('acknowledged_cases', $acknowledged_cases)
-        ], 200);
+        return response()->json(compact('reported_cases', 'pending_cases', 'enroute_cases', 'onsite_cases', 'acknowledged_cases'), 200);
     }
 }
