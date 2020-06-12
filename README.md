@@ -15,19 +15,20 @@ To use this api on your local machine,
 
 ## Endpoints
 
-| Http Verb 	| Path                      	| Parameters 	| Controller#action 	| Used for                                                   	|
-|-----------	|---------------------------	|------------	|-------------------	|------------------------------------------------------------	|
-| GET       	| `/api/v1/reports`         	|            	| reports#list      	| Displays a listing of all reports                          	|
-| GET       	| `/api/v1/reports`         	| `status`   	| reports#list      	| Displays a listing of all reports by status                	|
-| PATCH     	| `/api/v1/reports/{id}`    	| `status`   	| reports#update    	| Update the status of a report                              	|
-| GET       	| `/api/v1/reports/metrics` 	|            	| reports#metrics   	| View metrics from admin                                    	|
-| POST      	| `/api/v1/auth/login`      	|            	| auth#login        	| Authenticates a user                                       	|
-| POST      	| `/api/v1/auth/logout`     	|            	| auth#logout       	| Logs out a user out  of the application                    	|
-| GET       	| `/api/v1/guest/reports`   	|            	| guest#reports     	| Displays a listing of all  reports to the guest users      	|
-| GET       	| `/api/v1/guest/reports`   	| `status`   	| guest#reports     	| Displays a listing of all reports by status to guest users 	|
-| GET       	| `/api/v1/guest/metrics`   	|            	| guest#metrics     	| View metrics                                               	|
-| POST      	| `/api/v1/users`           	|            	| users#store       	| Create a new admin user                                    	|
-| GET       	| `/api/v1/me`              	|            	| auth#me           	| View information about the current request user            	|
+| Http Verb 	| Path                      	| Parameters                          	| Controller#action 	| Used for                                                   	|
+|-----------	|---------------------------	|-------------------------------------	|-------------------	|------------------------------------------------------------	|
+| GET       	| `/api/v1/reports`         	|                                     	| reports#list      	| Displays a listing of all reports                          	|
+| GET       	| `/api/v1/reports`         	| `status`                            	| reports#list      	| Displays a listing of all reports by status                	|
+| POST      	| `/api/v1/reports`         	| `title`, `location`, `visual_image` 	| reports#store     	| Create a new report                                        	|
+| PATCH     	| `/api/v1/reports/{id}`    	| `status`                            	| reports#update    	| Update the status of a report                              	|
+| GET       	| `/api/v1/reports/metrics` 	|                                     	| reports#metrics   	| View metrics from admin                                    	|
+| POST      	| `/api/v1/auth/login`      	|                                     	| auth#login        	| Authenticates a user                                       	|
+| POST      	| `/api/v1/auth/logout`     	|                                     	| auth#logout       	| Logs out a user out  of the application                    	|
+| GET       	| `/api/v1/guest/reports`   	|                                     	| guest#reports     	| Displays a listing of all  reports to the guest users      	|
+| GET       	| `/api/v1/guest/reports`   	| `status`                            	| guest#reports     	| Displays a listing of all reports by status to guest users 	|
+| GET       	| `/api/v1/guest/metrics`   	|                                     	| guest#metrics     	| View metrics                                               	|
+| POST      	| `/api/v1/users`           	|                                     	| users#store       	| Create a new admin user                                    	|
+| GET       	| `/api/v1/me`              	|                                     	| auth#me           	| View information about the current request user            	|
 
 ### Base Uri
 
@@ -115,10 +116,34 @@ You should receive a json response with status `200`, a `data` key containing an
 ### Create
 
 To create a report, make a POST request to the the endpoint `api/v1/reports`.  
+
+### Parameters 
+
+`location` - required  
+`visual_image` - required|image  
+`title` - nullable  
+`note` - nullable  
+
 **Response**  
-`@TODO`  
+
+Expect a 201 success response code
+
 **Sample Response**  
-`@TODO`
+
+```json
+{
+    "message": "created",
+    "data": {
+        "status": "pending",
+        "title": "Accident a place",
+        "location": "Satellite town",
+        "visual_image": "http://localhost:7070/assets/imgs/txu1e77S4paCcCJ9c12K4bsCI7WtUfui0hlv35L5.jpeg",
+        "status_updated_at": "2020-06-12T11:03:09.000000Z",
+        "time_of_report": "2020-06-12T11:03:09.000000Z",
+        "id": 14
+    }
+}
+```
 
 ### Read
 
