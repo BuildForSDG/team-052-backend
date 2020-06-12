@@ -15,19 +15,20 @@ To use this api on your local machine,
 
 ## Endpoints
 
-| Http Verb 	| Path                      	| Parameters 	| Controller#action 	| Used for                                                   	|
-|-----------	|---------------------------	|------------	|-------------------	|------------------------------------------------------------	|
-| GET       	| `/api/v1/reports`         	|            	| reports#list      	| Displays a listing of all reports                          	|
-| GET       	| `/api/v1/reports`         	| `status`   	| reports#list      	| Displays a listing of all reports by status                	|
-| PATCH     	| `/api/v1/reports/{id}`    	| `status`   	| reports#update    	| Update the status of a report                              	|
-| GET       	| `/api/v1/reports/metrics` 	|            	| reports#metrics   	| View metrics from admin                                    	|
-| POST      	| `/api/v1/auth/login`      	|            	| auth#login        	| Authenticates a user                                       	|
-| POST      	| `/api/v1/auth/logout`     	|            	| auth#logout       	| Logs out a user out  of the application                    	|
-| GET       	| `/api/v1/guest/reports`   	|            	| guest#reports     	| Displays a listing of all  reports to the guest users      	|
-| GET       	| `/api/v1/guest/reports`   	| `status`   	| guest#reports     	| Displays a listing of all reports by status to guest users 	|
-| GET       	| `/api/v1/guest/metrics`   	|            	| guest#metrics     	| View metrics                                               	|
-| POST      	| `/api/v1/users`           	|            	| users#store       	| Create a new admin user                                    	|
-| GET       	| `/api/v1/me`              	|            	| auth#me           	| View information about the current request user            	|
+| Http Verb 	| Path                      	| Parameters                          	| Controller#action 	| Used for                                                   	|
+|-----------	|---------------------------	|-------------------------------------	|-------------------	|------------------------------------------------------------	|
+| GET       	| `/api/v1/reports`         	|                                     	| reports#list      	| Displays a listing of all reports                          	|
+| GET       	| `/api/v1/reports`         	| `status`                            	| reports#list      	| Displays a listing of all reports by status                	|
+| POST      	| `/api/v1/reports`         	| `title`, `location`, `visual_image` 	| reports#store     	| Create a new report                                        	|
+| PATCH     	| `/api/v1/reports/{id}`    	| `status`                            	| reports#update    	| Update the status of a report                              	|
+| GET       	| `/api/v1/reports/metrics` 	|                                     	| reports#metrics   	| View metrics from admin                                    	|
+| POST      	| `/api/v1/auth/login`      	|                                     	| auth#login        	| Authenticates a user                                       	|
+| POST      	| `/api/v1/auth/logout`     	|                                     	| auth#logout       	| Logs out a user out  of the application                    	|
+| GET       	| `/api/v1/guest/reports`   	|                                     	| guest#reports     	| Displays a listing of all  reports to the guest users      	|
+| GET       	| `/api/v1/guest/reports`   	| `status`                            	| guest#reports     	| Displays a listing of all reports by status to guest users 	|
+| GET       	| `/api/v1/guest/metrics`   	|                                     	| guest#metrics     	| View metrics                                               	|
+| POST      	| `/api/v1/users`           	|                                     	| users#store       	| Create a new admin user                                    	|
+| GET       	| `/api/v1/me`              	|                                     	| auth#me           	| View information about the current request user            	|
 
 ### Base Uri
 
@@ -35,7 +36,11 @@ The api's base uri is `/api/v1/`.
 
 ### List
 
-To get a list of all items of a resource (e.g reports), make a GET request to the endpoint `/api/v1/reports/`.  
+To get a list of all items of reports, make a GET request to the endpoint `/api/v1/reports`.
+
+#### Parameters
+
+To filter the reports by `status`, `location`, or `time_of_report`, just append the query parameter to your request uri. e.g `/api/v1/guest/reports?status=pending`
 
 #### Response  
 
@@ -70,37 +75,134 @@ You should receive a json response with status `200`, a `data` key containing an
  }
 ```
 
+### List (Guest)
+
+To get a list of all items of reports for guest users, make a GET request to the endpoint `/api/v1/guest/reports`.  
+
+### Parameters
+
+To filter the reports by `status`, `location`, or `time_of_report`, just append the query parameter to your request uri. e.g `/api/v1/guest/reports?status=pending`
+
+#### Response  
+
+You should receive a json response with status `200`, a `data` key containing an array of reports and `meta` key containing pagination details. The response is limited to only the following data `title`, `location`, `visual_image`, and `time_of_report`.
+
+#### Sample Response
+
+```json
+{
+  "meta": {
+    "current_page": 1,
+    "first_page_url": "http://localhost:7070/api/v1/reports?page=1",
+    "from": 1,
+    "next_page_url": null,
+    "path": "http://localhost:7070/api/v1/reports",
+    "per_page": 15,
+    "prev_page_url": null,
+    "to": 10
+  },
+  "data": [
+    {
+      "id": 10,
+      "title": "Yessenia Manor Accident",
+      "location": "19688 Roselyn Radial",
+      "visual_image": "https://lorempixel.com/300/300/city/?38172",
+      "time_of_report": "2020-05-08T21:22:14.000000Z",
+    }
+   ]
+ }
+```
+
 ### Create
 
-To create a resource, make a POST request to the the endpoint `api/v1/reports`.  
+To create a report, make a POST request to the the endpoint `api/v1/reports`.  
+
+### Parameters 
+
+`location` - required  
+`visual_image` - required|image  
+`title` - nullable  
+`note` - nullable  
+
 **Response**  
-`@TODO`  
+
+Expect a 201 success response code
+
 **Sample Response**  
-`@TODO`
+
+```json
+{
+    "message": "created",
+    "data": {
+        "status": "pending",
+        "title": "Accident a place",
+        "location": "Satellite town",
+        "visual_image": "http://localhost:7070/assets/imgs/txu1e77S4paCcCJ9c12K4bsCI7WtUfui0hlv35L5.jpeg",
+        "status_updated_at": "2020-06-12T11:03:09.000000Z",
+        "time_of_report": "2020-06-12T11:03:09.000000Z",
+        "id": 14
+    }
+}
+```
 
 ### Read
 
-To read a single resource, make a GET request to the the endpoint `api/v1/reports/{id}`.  
+To read a single report, make a GET request to the the endpoint `api/v1/reports/{id}`. 
+
 **Response**  
-`@TODO`  
+
+You should receive a json response with status 200, and data key containing an object of the report details.
+
 **Sample Response**  
-`@TODO`
+
+```json
+{
+  "data": {
+    "id": 1,
+    "title": "Sydnie Shoal Accident",
+    "note": "HE was.' 'I never could abide figures!' And with that she still held the pieces of mushroom in her.",
+    "status": "acknowledged",
+    "location": "200 Balistreri Ridges Apt. 635",
+    "visual_image": "https://lorempixel.com/300/300/city/?44316",
+    "time_of_report": "2020-05-08T21:22:14.000000Z",
+    "status_updated_at": "2020-05-08T21:22:14.000000Z"
+  }
+}
+```
 
 ### Update
 
-To update a resource, make a PATCH request to the the endpoint `api/v1/reports/{id}`.  
-**Response**  
-`@TODO`  
-**Sample Response**  
-`@TODO`
+To update the status of a request, make a PATCH request to the endpoint `api/v1/reports/{id}` with `status` as patch parameter. Status must be either `pending`, `acknowledged` or `enroute`.  
 
-### Delete
-
-To delete a resource, make a DELETE request to the the endpoint `api/v1/reports/{id}`.  
 **Response**  
-`@TODO`  
+
+You should receive a response status of 204 with no content
+
 **Sample Response**  
-`@TODO`
+
+```json
+
+```
+
+### Metrics
+
+To view reports metrics, make a GET request to the endpoint `api/v1/reports/metrics`. This route requires no authorization. 
+
+**Response**
+
+You should receive a reponse status of 200 with the following data.
+
+**Sample Response**
+
+```json
+{
+  "reported_cases": 10,
+  "pending_cases": 5,
+  "enroute_cases": 1,
+  "onsite_cases": 0,
+  "acknowledged_cases": 4
+}
+```
 
 ## Authentication & Authorization
 
