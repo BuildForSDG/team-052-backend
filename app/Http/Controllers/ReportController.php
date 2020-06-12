@@ -6,6 +6,7 @@ use App\Http\Controllers\Utils\RespondsWithJson;
 use App\Http\Controllers\Utils\SimplePaginates;
 use App\Report;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
 class ReportController extends Controller
@@ -25,18 +26,29 @@ class ReportController extends Controller
     /**
      * Store a report in the database
      *
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response|\Laravel\Lumen\Http\ResponseFactory
      */
-    /*public function store(Request $request)
+    public function store(Request $request)
     {
-        // perform storage logic here
+        $messages = require(resource_path('lang/en/validation.php'));
 
+        $data = $this->validate($request, $this->creationRules(), $messages);
 
-        // after storing the report to the database,
-        // return a store response with an instance of the reported model
+        /**
+         * @var \Illuminate\Http\UploadedFile $uploaded_file
+         */
+        $uploaded_file = $data['visual_image'];
+        $path = $uploaded_file->store('');
 
-        //return $this->storeResponse($report);
-    }*/
+        $report = new Report();
+        $report->title = $data['title'];
+        $report->location = $data['location'];
+        $report->visual_image = Storage::url($path);
+        $report->save();
+
+        return $this->storeResponse($report);
+    }
 
     /**
      * Read a single report by its id
@@ -60,9 +72,10 @@ class ReportController extends Controller
     {
         $report = Report::findOrFail($id);
 
+        $messages = require(resource_path('lang/en/validation.php'));
         $data = $this->validate($request, [
             'status' => ['required', Rule::in(['pending', 'acknowledged', 'enroute'])]
-        ]);
+        ], $messages);
         $status = $data['status'];
 
         $report->status = $status;
@@ -117,5 +130,19 @@ class ReportController extends Controller
         $acknowledged_cases = Report::where('status', 'acknowledged')->count();
 
         return response()->json(compact('reported_cases', 'pending_cases', 'enroute_cases', 'onsite_cases', 'acknowledged_cases'), 200);
+    }
+
+    /**
+     * An array of validation rules for creating a report
+     *
+     * @return array
+     */
+    protected function creationRules()
+    {
+        return [
+            'title' => ['nullable'],
+            'location' => ['required'],
+            'visual_image' => ['required', 'image']
+        ];
     }
 }

@@ -89,10 +89,12 @@ class AuthController extends Controller
      */
     protected function validateLogin(Request $request)
     {
+        $messages = require(resource_path('lang/en/validation.php'));
+
         $this->validate($request, [
             $this->username() => 'required|email',
-            'password' => 'required|string',
-        ]);
+            'password' => 'required',
+        ], $messages);
     }
 
     /**
