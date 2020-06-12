@@ -147,7 +147,7 @@ You should receive a json response with status 200, and data key containing an o
 
 ### Update
 
-To update the status of a request, make a PATCH request to the endpoint `api/v1/reports/{id}`.  
+To update the status of a request, make a PATCH request to the endpoint `api/v1/reports/{id}` with `status` as patch parameter. Status must be either `pending`, `acknowledged` or `enroute`.  
 
 **Response**  
 
