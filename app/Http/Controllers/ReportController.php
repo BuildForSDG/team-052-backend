@@ -8,6 +8,7 @@ use App\Report;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
+use JD\Cloudder\Facades\Cloudder;
 
 class ReportController extends Controller
 {
@@ -39,12 +40,13 @@ class ReportController extends Controller
          * @var \Illuminate\Http\UploadedFile $uploaded_file
          */
         $uploaded_file = $data['visual_image'];
-        $path = $uploaded_file->store('');
+        $cloudder = Cloudder::upload($uploaded_file->getRealPath());
+        $url = $cloudder->getResult()['url'];
 
         $report = new Report();
         $report->title = $data['title'];
         $report->location = $data['location'];
-        $report->visual_image = Storage::url($path);
+        $report->visual_image = $url;
         $report->save();
 
         return $this->storeResponse($report);
