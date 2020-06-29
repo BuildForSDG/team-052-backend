@@ -29,7 +29,7 @@ class GuestController extends Controller
             $reports = Report::orderBy('id', 'desc');
         }
 
-        $reports = $reports->select('title', 'location', 'visual_image', 'time_of_report')->simplePaginate();
+        $reports = $reports->select('title', 'location', 'visual_image', 'status', 'time_of_report')->simplePaginate();
 
         return $this->listResponse($this->extractItemsFrom($reports), $this->extractMetaFrom($reports));
     }
